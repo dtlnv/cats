@@ -24,6 +24,20 @@ const server = serve({
         }
       },
     },
+
+    "/api/images/:id": {
+      async GET(req) {
+        const id = req.params.id;
+
+        try {
+          const image = await theCatAPI.images.getImage(id);
+          return Response.json(image);
+        } catch (e) {
+          const message = e instanceof Error ? e.message : "Unknown error";
+          return Response.json({ error: message }, { status: 502 });
+        }
+      },
+    }
   },
 
   development: process.env.NODE_ENV !== "production" && {

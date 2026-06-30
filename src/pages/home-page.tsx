@@ -4,7 +4,6 @@ import { ImagesGrid } from "@/components/images-grid";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import { useLimitContext } from "@/providers/limit-provider";
-import { TopLoader } from "@/components/top-loader";
 
 export function HomePage() {
   const { limit } = useLimitContext();
@@ -13,7 +12,6 @@ export function HomePage() {
   return (
     <div className="min-h-svh bg-background text-foreground">
       <div className="mx-auto w-full max-w-[76rem] px-4 py-8 sm:px-6 sm:py-12 md:px-6 md:py-16">
-        {loading && <TopLoader />}
         <Header loading={loading} />
         {!error && <ImagesGrid data={data} loading={loading} />}
         {error ? (
