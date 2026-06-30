@@ -1,6 +1,6 @@
 import { serve } from "bun";
 import index from "./index.html";
-import { DEFAULT_LIMIT, API_MAX_LIMIT } from "./lib/consts";
+import { DEFAULT_LIMIT, AVAILABLE_LIMITS } from "./lib/consts";
 import { theCatAPI } from "./api/cats.api";
 
 const server = serve({
@@ -10,7 +10,8 @@ const server = serve({
     "/api/images/search": {
       async GET(req) {
         const url = new URL(req.url);
-        const limit = Number(url.searchParams.get("limit")) || DEFAULT_LIMIT || API_MAX_LIMIT;
+        const userLimit = Number(url.searchParams.get("limit"));
+        const limit = AVAILABLE_LIMITS.includes(userLimit) ? userLimit : DEFAULT_LIMIT;
 
         try {
           const images = await theCatAPI.images.searchImages({

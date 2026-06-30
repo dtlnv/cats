@@ -1,30 +1,15 @@
 import "./index.css";
-import { Header } from "@/components/header";
-import { useSearch } from "@/hooks/useSearch";
-import { ImagesGrid } from "@/components/images-grid";
-import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
-import { useLimitContext } from "@/providers/limit-provider";
-import { TopLoader } from "@/components/top-loader";
+import { Routes, Route } from "react-router-dom";
+import { CatPage } from "@/pages/cat-page";
+import { HomePage } from "@/pages/home-page";
+
 
 export function App() {
-  const { limit } = useLimitContext();
-  const { loading, data, error, onRetry } = useSearch(limit);
-
   return (
-    <div className="min-h-svh bg-background text-foreground">
-      <div className="mx-auto w-full max-w-[76rem] px-4 py-8 sm:px-6 sm:py-12 md:px-6 md:py-16">
-        {loading && <TopLoader />}
-        <Header loading={loading} />
-        <ImagesGrid data={data} loading={loading} />
-        {error ? (
-          <Button onClick={onRetry} disabled={loading}>
-            {loading && <Loader className="animate-spin" />}
-            Retry
-          </Button>
-        ) : null}
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/cats/:id" element={<CatPage />} />
+    </Routes>
   );
 }
 

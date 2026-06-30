@@ -15,15 +15,9 @@ const LimitContext = createContext<LimitContextType | undefined>(undefined);
 export function LimitProvider({ children }: LimitProviderProps) {
   const [limit, setLimit] = useState<number>(DEFAULT_LIMIT);
 
-  const onUpdateLimit = useCallback((num: number | string) => {
-    const limit = +num;
-
-    if (AVAILABLE_LIMITS.includes(limit)) {
-      setLimit(limit);
-    } else {
-      setLimit(DEFAULT_LIMIT);
-    }
-  }, [limit]);
+  const onUpdateLimit = useCallback((newLimit: number | string) => {
+    setLimit(AVAILABLE_LIMITS.includes(+newLimit) ? +newLimit : DEFAULT_LIMIT);
+  }, []);
 
 
   return (

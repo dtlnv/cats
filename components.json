@@ -17,7 +17,8 @@
     "lib": "@/lib",
     "hooks": "@/hooks",
     "assets": "@/assets",
-    "types": "@/types"
+    "types": "@/types",
+    "pages": "@/pages"
   },
   "iconLibrary": "lucide"
 }

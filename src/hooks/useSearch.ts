@@ -30,7 +30,7 @@ export function useSearch(limit: number) {
         const newData: CatImage[] = await res.json();
         setData(newData);
       } catch (e) {
-        if (e instanceof Error && e.name === "AbortError") {
+        if ((e instanceof Error && e.name === "AbortError") || !active) {
           return;
         }
 
