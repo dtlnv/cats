@@ -8,11 +8,16 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import { Toaster } from "./components/ui/sonner";
+import { LimitProvider } from "./providers/limit-provider";
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <App />
+    <LimitProvider>
+      <App />
+    </LimitProvider>
+    <Toaster position="top-center" />
   </StrictMode>
 );
 

@@ -1,39 +1,32 @@
 import { serve } from "bun";
 import index from "./index.html";
+import { DEFAULT_LIMIT, API_MAX_LIMIT } from "./lib/consts";
+import { theCatAPI } from "./api/cats.api";
 
 const server = serve({
   routes: {
-    // Serve index.html for all unmatched routes.
     "/*": index,
 
-    "/api/hello": {
+    "/api/images/search": {
       async GET(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "GET",
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
-      },
-    },
+        const url = new URL(req.url);
+        const limit = Number(url.searchParams.get("limit")) || DEFAULT_LIMIT || API_MAX_LIMIT;
 
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
-      });
+        try {
+          const images = await theCatAPI.images.searchImages({
+            limit,
+          });
+          return Response.json(images);
+        } catch (e) {
+          const message = e instanceof Error ? e.message : "Unknown error";
+          return Response.json({ error: message }, { status: 502 });
+        }
+      },
     },
   },
 
   development: process.env.NODE_ENV !== "production" && {
-    // Enable browser hot reloading in development
     hmr: true,
-
-    // Echo console logs from the browser to the server
     console: true,
   },
 });
