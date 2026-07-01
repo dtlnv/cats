@@ -10,6 +10,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { Toaster } from "./components/ui/sonner";
+import { TooltipProvider } from "./components/ui/tooltip";
 import { LimitProvider } from "./providers/limit-provider";
 
 const elem = document.getElementById("root")!;
@@ -17,7 +18,9 @@ const app = (
 	<StrictMode>
 		<BrowserRouter>
 			<LimitProvider>
-				<App />
+				<TooltipProvider>
+					<App />
+				</TooltipProvider>
 			</LimitProvider>
 			<Toaster position="top-center" />
 		</BrowserRouter>

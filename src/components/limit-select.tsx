@@ -24,7 +24,7 @@ export function LimitSelect({ disabled }: LimitSelectProps) {
 				onValueChange={(value) => onUpdateLimit(value)}
 				disabled={disabled}
 			>
-				<SelectTrigger>
+				<SelectTrigger className="max-h-7">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>

@@ -1,4 +1,4 @@
-import type { Favorite } from "@/types/favorites.types";
+import type { Favorite } from "@/types/favs.types";
 import { GridCard } from "./grid-card";
 
 type Props = {

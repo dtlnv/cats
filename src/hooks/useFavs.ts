@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import type { Favorite } from "@/types/favorites.types";
+import type { Favorite } from "@/types/favs.types";
 
 export function useFavs() {
 	const [loading, setLoading] = useState<boolean>(true);

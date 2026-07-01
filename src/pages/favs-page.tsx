@@ -11,6 +11,7 @@ export function FavsPage() {
 
 	return (
 		<Layout loading={loading}>
+			<h1 className="text-2xl font-bold mb-4">Favourites</h1>
 			{!error && <FavsGrid data={data} />}
 			{error ? (
 				<div className="flex items-center justify-center h-64">

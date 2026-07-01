@@ -1,6 +1,7 @@
 import { Check, CodeXml, Copy } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
 	Dialog,
@@ -10,6 +11,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "../ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type ImageCardProps = {
 	url: string;
@@ -38,14 +40,26 @@ export function EmbedButton({ url, small = false }: ImageCardProps) {
 	return (
 		<Dialog>
 			<DialogTrigger>
-				<Button variant="outline">
-					<CodeXml />
-					{small ? null : "Embed"}
-				</Button>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button variant="outline">
+							<CodeXml />
+							{small ? null : "Embed"}
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>
+						Embed this image in your website or blog
+					</TooltipContent>
+				</Tooltip>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Embed this image</DialogTitle>
+					<DialogTitle className="flex items-center gap-2">
+						<Avatar>
+							<AvatarImage src={url} />
+						</Avatar>
+						Embed this image
+					</DialogTitle>
 					<DialogDescription>
 						Want to embed this image in your website or blog? Just drop in the
 						embed code below and you're done!

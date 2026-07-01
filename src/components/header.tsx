@@ -17,11 +17,11 @@ export function Header({ loading = false }: HeaderProps) {
 			<Link to={"/"}>
 				<div className="flex items-center gap-2.5">
 					{loading ? (
-						<Loader className="animate-spin w-8 h-8" />
+						<Loader className="animate-spin w-12 h-12" />
 					) : (
-						<img src={logo} alt={APP_NAME} className="size-8" />
+						<img src={logo} alt={APP_NAME} className="size-12" />
 					)}
-					<span className="font-mono text-xs font-medium tracking-[0.18em] text-muted-foreground">
+					<span className="font-mono text-lg font-medium tracking-[0.18em] text-muted-foreground">
 						{APP_NAME}
 					</span>
 				</div>
@@ -35,7 +35,7 @@ export function Header({ loading = false }: HeaderProps) {
 				<NavElement
 					link={"/favs"}
 					icon={<Heart className="w-4 h-4" />}
-					label={"Favorites"}
+					label={"Favourites"}
 				/>
 				<NavElement
 					link={"/random"}

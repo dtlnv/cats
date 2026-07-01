@@ -14,7 +14,10 @@ export function HomePage() {
 
 	return (
 		<Layout loading={loading}>
-			<LimitSelect disabled={loading} />
+			<div className="flex items-center justify-between mb-4">
+				<h1 className="text-2xl font-bold">Cats</h1>
+				<LimitSelect disabled={loading} />
+			</div>
 			{!error && <ImagesGrid data={data} loading={loading} />}
 			{error ? (
 				<div className="flex items-center justify-center h-64">

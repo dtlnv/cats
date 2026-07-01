@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type ImageCardProps = {
 	id: string;
@@ -33,8 +34,8 @@ export function FavoriteButton({
 			if (!response.ok) {
 				throw new Error(
 					favorite
-						? "Failed to remove from favorites"
-						: "Failed to add to favorites",
+						? "Failed to remove from favourites"
+						: "Failed to add to favourites",
 				);
 			}
 
@@ -42,12 +43,12 @@ export function FavoriteButton({
 
 			toast.success(
 				favorite ? (
-					"Removed from favorites"
+					"Removed from favourites"
 				) : (
 					<>
 						Added to{" "}
 						<Link to="/favs" className="underline">
-							favorites
+							favourites
 						</Link>
 					</>
 				),
@@ -57,8 +58,8 @@ export function FavoriteButton({
 			console.error("Error toggling favorite:", error);
 			toast.error(
 				favorite
-					? "Failed to remove from favorites"
-					: "Failed to add to favorites",
+					? "Failed to remove from favourites"
+					: "Failed to add to favourites",
 			);
 		} finally {
 			setLoading(false);
@@ -66,9 +67,26 @@ export function FavoriteButton({
 	}, [favorite, id]);
 
 	return (
-		<Button onClick={onToggleFavorite} variant="outline" disabled={loading}>
-			{favorite ? <Heart className="fill-red-500 text-red-500" /> : <Heart />}
-			{small ? null : favorite ? "Remove from favorites" : "Add to favorites"}
-		</Button>
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button onClick={onToggleFavorite} variant="outline" disabled={loading}>
+					{favorite ? (
+						<Heart className="fill-red-500 text-red-500" />
+					) : (
+						<Heart />
+					)}
+					{small
+						? null
+						: favorite
+							? "Remove from favourites"
+							: "Add to favourites"}
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent>
+				{favorite
+					? "Remove this image from favourites"
+					: "Add this image to favourites"}
+			</TooltipContent>
+		</Tooltip>
 	);
 }

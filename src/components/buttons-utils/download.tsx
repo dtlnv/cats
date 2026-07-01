@@ -1,6 +1,7 @@
 import { Download } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type ImageCardProps = {
 	id: string;
@@ -37,9 +38,14 @@ export function DownloadButton({ id, small = false }: ImageCardProps) {
 	};
 
 	return (
-		<Button onClick={onDownload} variant="outline">
-			<Download />
-			{small ? null : "Download"}
-		</Button>
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button onClick={onDownload} variant="outline">
+					<Download />
+					{small ? null : "Download"}
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent>Download this image to your device</TooltipContent>
+		</Tooltip>
 	);
 }

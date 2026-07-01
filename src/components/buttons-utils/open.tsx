@@ -2,6 +2,7 @@ import { ExternalLink, Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type ImageCardProps = {
 	id: string;
@@ -32,8 +33,17 @@ export function OpenButton({ id }: ImageCardProps) {
 	}, []);
 
 	return (
-		<Link to={`/cat/${id}`}>
-			<Button variant="outline">{isNewTab ? <ExternalLink /> : <Eye />}</Button>
-		</Link>
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Link to={`/cat/${id}`}>
+					<Button variant="outline">
+						{isNewTab ? <ExternalLink /> : <Eye />}
+					</Button>
+				</Link>
+			</TooltipTrigger>
+			<TooltipContent>
+				{isNewTab ? "Open in new tab" : "Open image details"}
+			</TooltipContent>
+		</Tooltip>
 	);
 }
