@@ -5,7 +5,12 @@ import { Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import { TopLoader } from "./top-loader";
 
-export function Header({ loading = false }: { loading?: boolean }) {
+type HeaderProps = {
+    loading?: boolean;
+    showLimitSelect?: boolean;
+}
+
+export function Header({ loading = false, showLimitSelect = true }: HeaderProps) {
     return (
         <header className="mb-12 flex items-center justify-between">
             {loading && <TopLoader />}
@@ -18,7 +23,8 @@ export function Header({ loading = false }: { loading?: boolean }) {
                     </span>
                 </div>
             </Link>
-            <LimitSelect />
+
+            {showLimitSelect && <LimitSelect />}
         </header>
     );
 }
