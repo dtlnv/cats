@@ -14,12 +14,7 @@ export function CatPage() {
 					{!loading && error && (
 						<div className="flex flex-col items-center justify-center gap-4">
 							<p className="text-muted-foreground">{error.message}</p>
-							<Button
-								onClick={onRetry}
-								className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700"
-							>
-								Retry
-							</Button>
+							<Button onClick={onRetry}>Retry</Button>
 						</div>
 					)}
 					{loading && (

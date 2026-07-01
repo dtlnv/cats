@@ -1,16 +1,7 @@
 import { serve } from "bun";
 import { theCatAPI } from "./api/cats.api";
 import index from "./index.html";
-import { AVAILABLE_LIMITS, DEFAULT_LIMIT } from "./lib/consts";
-
-const getStatusCode = (error: unknown): number => {
-	if (error instanceof Error) {
-		if (error.message.includes("not found") || error.message.includes("404")) {
-			return 404;
-		}
-	}
-	return 502;
-};
+import { getStatusCode, resolveLimit } from "./lib/api-helpers";
 
 const server = serve({
 	routes: {
@@ -20,9 +11,7 @@ const server = serve({
 			async GET(req) {
 				const url = new URL(req.url);
 				const userLimit = Number(url.searchParams.get("limit"));
-				const limit = AVAILABLE_LIMITS.includes(userLimit)
-					? userLimit
-					: DEFAULT_LIMIT;
+				const limit = resolveLimit(userLimit);
 
 				try {
 					const images = await theCatAPI.images.searchImages({

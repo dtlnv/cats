@@ -1,5 +1,6 @@
 import { Frown } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { CatImage } from "@/types/cats.types";
 import { Button } from "./ui/button";
@@ -34,6 +35,7 @@ export function ImagesGrid({ data, loading }: Props) {
 			URL.revokeObjectURL(blobUrl);
 		} catch (error) {
 			console.error("Error downloading image:", error);
+			toast.error("Failed to download image");
 		}
 	};
 
