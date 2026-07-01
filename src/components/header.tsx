@@ -11,7 +11,7 @@ type HeaderProps = {
 
 export function Header({ loading = false }: HeaderProps) {
 	return (
-		<header className="mb-12 flex items-center justify-between">
+		<header className="mb-12 flex flex-wrap items-center justify-between gap-4">
 			{loading && <TopLoader />}
 
 			<Link to={"/"}>
@@ -26,7 +26,7 @@ export function Header({ loading = false }: HeaderProps) {
 					</span>
 				</div>
 			</Link>
-			<nav className="flex items-center gap-8">
+			<nav className="flex items-center gap-4 sm:gap-8">
 				<NavElement
 					link={"/"}
 					icon={<Home className="w-4 h-4" />}

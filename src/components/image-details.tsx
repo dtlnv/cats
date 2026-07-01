@@ -24,18 +24,18 @@ export function ImageDetails({ data }: ImageCardProps) {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<div className="flex gap-4 justify-center items-stretch">
+			<div className="flex justify-center items-stretch">
 				<div>
 					<img
 						src={data.image.url}
 						alt={`Cat #${data.image.id}`}
-						className="rounded-lg max-h-[80vh] object-contain"
+						className="rounded-lg max-h-[60vh] sm:max-h-[80vh] w-full sm:w-auto object-contain"
 					/>
 				</div>
 			</div>
 
 			<div className="flex flex-col justify-center gap-4">
-				<div className="flex gap-2 items-center justify-center">
+				<div className="flex flex-wrap gap-2 items-center justify-center">
 					<Button onClick={() => setShowMeta(!showMeta)} variant="outline">
 						{showMeta ? <EyeOff /> : <Eye />}
 						{showMeta ? "Hide" : "Show"} meta
