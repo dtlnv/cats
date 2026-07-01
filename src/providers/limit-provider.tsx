@@ -1,36 +1,37 @@
-import { createContext, useCallback, useContext, useState } from 'react';
-import { AVAILABLE_LIMITS, DEFAULT_LIMIT } from '@/lib/consts';
+import { createContext, useCallback, useContext, useState } from "react";
+import { AVAILABLE_LIMITS, DEFAULT_LIMIT } from "@/lib/consts";
 
 interface LimitContextType {
-  limit: number;
-  onUpdateLimit: (n: number | string) => void;
+	limit: number;
+	onUpdateLimit: (n: number | string) => void;
 }
 
 interface LimitProviderProps {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 const LimitContext = createContext<LimitContextType | undefined>(undefined);
 
 export function LimitProvider({ children }: LimitProviderProps) {
-  const [limit, setLimit] = useState<number>(DEFAULT_LIMIT);
+	const [limit, setLimit] = useState<number>(DEFAULT_LIMIT);
 
-  const onUpdateLimit = useCallback((newLimit: number | string) => {
-    setLimit(AVAILABLE_LIMITS.includes(+newLimit) ? +newLimit : DEFAULT_LIMIT);
-  }, []);
+	const onUpdateLimit = useCallback((newLimit: number | string) => {
+		setLimit(AVAILABLE_LIMITS.includes(+newLimit) ? +newLimit : DEFAULT_LIMIT);
+	}, []);
 
-
-  return (
-    <LimitContext.Provider value={{ limit, onUpdateLimit }}>{children}</LimitContext.Provider>
-  );
+	return (
+		<LimitContext.Provider value={{ limit, onUpdateLimit }}>
+			{children}
+		</LimitContext.Provider>
+	);
 }
 
 export function useLimitContext() {
-  const context = useContext(LimitContext);
+	const context = useContext(LimitContext);
 
-  if (context === undefined) {
-    throw new Error('useLimitContext must be used within a LimitProvider');
-  }
+	if (context === undefined) {
+		throw new Error("useLimitContext must be used within a LimitProvider");
+	}
 
-  return context;
+	return context;
 }

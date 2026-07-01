@@ -14,14 +14,14 @@ import { LimitProvider } from "./providers/limit-provider";
 
 const elem = document.getElementById("root")!;
 const app = (
-  <StrictMode>
-    <BrowserRouter>
-      <LimitProvider>
-        <App />
-      </LimitProvider>
-      <Toaster position="top-center" />
-    </BrowserRouter>
-  </StrictMode>
+	<StrictMode>
+		<BrowserRouter>
+			<LimitProvider>
+				<App />
+			</LimitProvider>
+			<Toaster position="top-center" />
+		</BrowserRouter>
+	</StrictMode>
 );
 
 // https://bun.com/docs/bundler/hot-reloading#import-meta-hot-data
