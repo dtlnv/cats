@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { CopyButton } from "./buttons-utils/copy";
 import { DownloadButton } from "./buttons-utils/download";
+import { EmbedButton } from "./buttons-utils/embed";
 import { FavoriteButton } from "./buttons-utils/favorite";
 import { OpenButton } from "./buttons-utils/open";
 
@@ -23,11 +24,12 @@ export function GridCard({
 }: Props) {
 	return (
 		<div className="mb-4 break-inside-avoid relative">
-			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center gap-4 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/50 rounded-lg">
+			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center gap-2 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/50 rounded-lg">
 				<OpenButton id={id} />
 				<DownloadButton id={id} small />
 				<FavoriteButton id={id} favouriteId={favouriteId} small />
-				<CopyButton id={id} small />
+				<CopyButton url={url} small />
+				<EmbedButton url={url} small />
 			</div>
 
 			<img

@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { CatImageData } from "@/types/cats.types";
 import { CopyButton } from "./buttons-utils/copy";
 import { DownloadButton } from "./buttons-utils/download";
+import { EmbedButton } from "./buttons-utils/embed";
 import { FavoriteButton } from "./buttons-utils/favorite";
 import { Button } from "./ui/button";
 
@@ -41,7 +42,8 @@ export function ImageDetails({ data }: ImageCardProps) {
 					</Button>
 					<DownloadButton id={data.image.id} />
 					<FavoriteButton id={data.image.id} favouriteId={data.favouriteId} />
-					<CopyButton id={data.image.id} />
+					<CopyButton url={data.image.url} />
+					<EmbedButton url={data.image.url} />
 				</div>
 
 				{showMeta && (
