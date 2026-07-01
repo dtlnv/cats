@@ -34,3 +34,14 @@ It also has a detail page for a cat image that shows the image and its data.
 - TypeScript
 - React Router
 - The Cat API
+
+## Structure
+
+- `src/api` - API client for The Cat API
+- `src/components` - Shared UI components (`ui/` for shadcn primitives, `buttons-utils/` for action buttons)
+- `src/hooks` - Data-fetching and state hooks
+- `src/pages` - Route-level pages
+- `src/providers` - Context providers
+- `src/lib` - API helpers, constants, and utilities
+- `src/types` - Shared TypeScript types
+- `build.ts` - Bun build script
