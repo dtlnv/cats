@@ -4,3 +4,8 @@ export interface CatImage {
     width: number;
     height: number;
 }
+
+export interface CatImageData {
+    image: CatImage;
+    analysis: any;
+}

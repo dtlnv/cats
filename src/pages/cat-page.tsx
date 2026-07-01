@@ -31,7 +31,7 @@ export function CatPage() {
               <p className="text-muted-foreground">No cat found</p>
             </div>
           )}
-          {data && <ImageCard image={data} />}
+          {data && <ImageCard data={data} />}
         </div>
       </div>
     </div>

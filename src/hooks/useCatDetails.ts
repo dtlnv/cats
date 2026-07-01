@@ -1,4 +1,4 @@
-import type { CatImage } from "@/types/cats.types";
+import type { CatImage, CatImageData } from "@/types/cats.types";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -6,7 +6,7 @@ import { toast } from "sonner";
 export function useCatDetails() {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<CatImage>();
+  const [data, setData] = useState<CatImageData>();
   const [error, setError] = useState<Error | null>(null);
   const [retryToken, setRetryToken] = useState<number>(0);
 
@@ -29,7 +29,7 @@ export function useCatDetails() {
           throw new Error(body?.error ?? `HTTP ${res.status}`);
         }
 
-        const details: any = await res.json();
+        const details: CatImageData = await res.json();
         setData(details);
       } catch (e) {
         if ((e instanceof Error && e.name === "AbortError") || !active) {

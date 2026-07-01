@@ -31,7 +31,8 @@ const server = serve({
 
         try {
           const image = await theCatAPI.images.getImage(id);
-          return Response.json(image);
+          const analysis = await theCatAPI.images.getImageAnalysis(id);
+          return Response.json({ image, analysis });
         } catch (e) {
           const message = e instanceof Error ? e.message : "Unknown error";
           return Response.json({ error: message }, { status: 502 });
