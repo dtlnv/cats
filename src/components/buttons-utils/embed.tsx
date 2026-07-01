@@ -39,19 +39,19 @@ export function EmbedButton({ url, small = false }: ImageCardProps) {
 
 	return (
 		<Dialog>
-			<DialogTrigger>
-				<Tooltip>
-					<TooltipTrigger asChild>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<DialogTrigger asChild>
 						<Button variant="outline">
 							<CodeXml />
 							{small ? null : "Embed"}
 						</Button>
-					</TooltipTrigger>
-					<TooltipContent>
-						Embed this image in your website or blog
-					</TooltipContent>
-				</Tooltip>
-			</DialogTrigger>
+					</DialogTrigger>
+				</TooltipTrigger>
+				<TooltipContent>
+					Embed this image in your website or blog
+				</TooltipContent>
+			</Tooltip>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">

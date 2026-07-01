@@ -5,10 +5,20 @@ export function resolveLimit(userLimit: number): number {
 }
 
 export function getStatusCode(error: unknown): number {
+	const statusCode =
+		error && typeof error === "object" && "statusCode" in error
+			? (error as { statusCode?: unknown }).statusCode
+			: undefined;
+
+	if (typeof statusCode === "number" && Number.isFinite(statusCode)) {
+		return statusCode;
+	}
+
 	if (error instanceof Error) {
 		if (error.message.includes("not found") || error.message.includes("404")) {
 			return 404;
 		}
 	}
+
 	return 502;
 }
