@@ -1,26 +1,26 @@
-import { Loader } from "lucide-react";
-import { Header } from "@/components/header";
 import { ImagesGrid } from "@/components/images-grid";
-import { Button } from "@/components/ui/button";
+import { Layout } from "@/components/layout";
+import { LimitSelect } from "@/components/limit-select";
 import { useSearch } from "@/hooks/useSearch";
 import { useLimitContext } from "@/providers/limit-provider";
 
+/**
+ * Main page of the app. Displays a grid of images and a limit selector.
+ * Fetches images from the API based on the selected limit.
+ */
 export function HomePage() {
 	const { limit } = useLimitContext();
-	const { loading, data, error, onRetry } = useSearch(limit);
+	const { loading, data, error } = useSearch(limit);
 
 	return (
-		<div className="min-h-svh bg-background text-foreground">
-			<div className="mx-auto w-full max-w-[76rem] px-4 py-8 sm:px-6 sm:py-12 md:px-6 md:py-16">
-				<Header loading={loading} />
-				{!error && <ImagesGrid data={data} loading={loading} />}
-				{error ? (
-					<Button onClick={onRetry} disabled={loading}>
-						{loading && <Loader className="animate-spin" />}
-						Retry
-					</Button>
-				) : null}
-			</div>
-		</div>
+		<Layout loading={loading}>
+			<LimitSelect disabled={loading} />
+			{!error && <ImagesGrid data={data} loading={loading} />}
+			{error ? (
+				<div className="flex items-center justify-center h-64">
+					<p className="text-muted-foreground">{error.message}</p>
+				</div>
+			) : null}
+		</Layout>
 	);
 }

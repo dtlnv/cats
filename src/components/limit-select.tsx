@@ -9,15 +9,20 @@ import {
 	SelectValue,
 } from "./ui/select";
 
-export function LimitSelect() {
+type LimitSelectProps = {
+	disabled?: boolean;
+};
+
+export function LimitSelect({ disabled }: LimitSelectProps) {
 	const { limit, onUpdateLimit } = useLimitContext();
 
 	return (
-		<div className="flex gap-2 items-center">
-			Limit:
+		<div className="flex gap-2 items-center mb-4">
+			<span className="text-xs font-medium text-muted-foreground">Limit:</span>
 			<Select
 				value={String(limit)}
 				onValueChange={(value) => onUpdateLimit(value)}
+				disabled={disabled}
 			>
 				<SelectTrigger>
 					<SelectValue />

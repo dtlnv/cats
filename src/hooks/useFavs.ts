@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { toast } from "sonner";
-import type { CatImageData } from "@/types/cats.types";
+import type { Favorite } from "@/types/favorites.types";
 
-export function useCatDetails() {
-	const { id } = useParams<{ id: string }>();
+export function useFavs() {
 	const [loading, setLoading] = useState<boolean>(true);
-	const [data, setData] = useState<CatImageData>();
+	const [data, setData] = useState<Favorite[]>([]);
 	const [error, setError] = useState<Error | null>(null);
 
 	useEffect(() => {
@@ -18,7 +16,7 @@ export function useCatDetails() {
 			setLoading(true);
 
 			try {
-				const res = await fetch(`/api/images/${id}`, {
+				const res = await fetch(`/api/favourites`, {
 					signal: controller.signal,
 				});
 
@@ -27,8 +25,8 @@ export function useCatDetails() {
 					throw new Error(body?.error ?? `HTTP ${res.status}`);
 				}
 
-				const details: CatImageData = await res.json();
-				setData(details);
+				const newData: Favorite[] = await res.json();
+				setData(newData);
 			} catch (e) {
 				if ((e instanceof Error && e.name === "AbortError") || !active) {
 					return;
@@ -47,7 +45,7 @@ export function useCatDetails() {
 			active = false;
 			controller.abort();
 		};
-	}, [id]);
+	}, []);
 
 	return {
 		loading,

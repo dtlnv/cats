@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { CatImage } from "@/types/cats.types";
 
@@ -6,7 +6,6 @@ export function useSearch(limit: number) {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [data, setData] = useState<CatImage[]>([]);
 	const [error, setError] = useState<Error | null>(null);
-	const [retryToken, setRetryToken] = useState<number>(0);
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -46,14 +45,11 @@ export function useSearch(limit: number) {
 			active = false;
 			controller.abort();
 		};
-	}, [limit, retryToken]);
-
-	const onRetry = useCallback(() => setRetryToken((t) => t + 1), []);
+	}, [limit]);
 
 	return {
 		loading,
 		data,
 		error,
-		onRetry,
 	};
 }

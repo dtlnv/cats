@@ -1,19 +1,15 @@
-import { Loader } from "lucide-react";
+import { Heart, Home, Loader, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo-small.png";
 import { APP_NAME } from "@/lib/consts";
-import { LimitSelect } from "./limit-select";
+import { NavElement } from "./nav-element";
 import { TopLoader } from "./top-loader";
 
 type HeaderProps = {
 	loading?: boolean;
-	showLimitSelect?: boolean;
 };
 
-export function Header({
-	loading = false,
-	showLimitSelect = true,
-}: HeaderProps) {
+export function Header({ loading = false }: HeaderProps) {
 	return (
 		<header className="mb-12 flex items-center justify-between">
 			{loading && <TopLoader />}
@@ -30,8 +26,23 @@ export function Header({
 					</span>
 				</div>
 			</Link>
-
-			{showLimitSelect && <LimitSelect />}
+			<nav className="flex items-center gap-8">
+				<NavElement
+					link={"/"}
+					icon={<Home className="w-4 h-4" />}
+					label={"Home"}
+				/>
+				<NavElement
+					link={"/favs"}
+					icon={<Heart className="w-4 h-4" />}
+					label={"Favorites"}
+				/>
+				<NavElement
+					link={"/random"}
+					icon={<Sparkles className="w-4 h-4" />}
+					label={"I'm Feeling Lucky"}
+				/>
+			</nav>
 		</header>
 	);
 }

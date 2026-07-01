@@ -1,12 +1,16 @@
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import type { CatImageData } from "@/types/cats.types";
+import { CopyButton } from "./buttons-utils/copy";
+import { DownloadButton } from "./buttons-utils/download";
+import { FavoriteButton } from "./buttons-utils/favorite";
 import { Button } from "./ui/button";
 
 type ImageCardProps = {
 	data?: CatImageData;
 };
 
-export function ImageCard({ data }: ImageCardProps) {
+export function ImageDetails({ data }: ImageCardProps) {
 	const [showMeta, setShowMeta] = useState<boolean>(false);
 
 	if (!data) {
@@ -30,14 +34,15 @@ export function ImageCard({ data }: ImageCardProps) {
 			</div>
 
 			<div className="flex flex-col justify-center gap-4">
-				<Button
-					variant="outline"
-					className="w-fit"
-					size="sm"
-					onClick={() => setShowMeta(!showMeta)}
-				>
-					{showMeta ? "Hide" : "Show"} meta
-				</Button>
+				<div className="flex gap-2 items-center justify-center">
+					<Button onClick={() => setShowMeta(!showMeta)} variant="outline">
+						{showMeta ? <EyeOff /> : <Eye />}
+						{showMeta ? "Hide" : "Show"} meta
+					</Button>
+					<DownloadButton id={data.image.id} />
+					<FavoriteButton id={data.image.id} favouriteId={data.favouriteId} />
+					<CopyButton id={data.image.id} />
+				</div>
 
 				{showMeta && (
 					<pre className="rounded-lg max-h-[80vh] p-4 bg-muted text-sm overflow-auto">

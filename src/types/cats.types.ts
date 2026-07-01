@@ -8,4 +8,5 @@ export interface CatImage {
 export interface CatImageData {
 	image: CatImage;
 	analysis: any;
+	favouriteId: number | null;
 }

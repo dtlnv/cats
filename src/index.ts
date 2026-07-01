@@ -31,12 +31,19 @@ const server = serve({
 				const id = req.params.id;
 
 				try {
-					const [image, analysis] = await Promise.all([
+					const [image, analysis, favouriteId] = await Promise.all([
 						theCatAPI.images.getImage(id),
 						theCatAPI.images.getImageAnalysis(id),
+						theCatAPI.favourites
+							.getFavourites()
+							.then(
+								(favs) => favs.find((fav) => fav.image.id === id)?.id ?? null,
+							),
 					]);
-					return Response.json({ image, analysis });
+
+					return Response.json({ image, analysis, favouriteId });
 				} catch (e) {
+					console.error("Error fetching image details:", e);
 					const message = e instanceof Error ? e.message : "Unknown error";
 					const status = getStatusCode(e);
 					return Response.json({ error: message }, { status });
@@ -58,6 +65,60 @@ const server = serve({
 							"Content-Disposition": `attachment; filename="cat.jpg"`,
 						},
 					});
+				} catch (e) {
+					const message = e instanceof Error ? e.message : "Unknown error";
+					const status = getStatusCode(e);
+					return Response.json({ error: message }, { status });
+				}
+			},
+		},
+
+		"/api/images/random": {
+			async GET() {
+				try {
+					const image = await theCatAPI.images.getRandomImage();
+					return Response.json(image);
+				} catch (e) {
+					const message = e instanceof Error ? e.message : "Unknown error";
+					const status = getStatusCode(e);
+					return Response.json({ error: message }, { status });
+				}
+			},
+		},
+
+		"/api/favourites": {
+			async GET() {
+				try {
+					const result = await theCatAPI.favourites.getFavourites();
+					return Response.json(result);
+				} catch (e) {
+					const message = e instanceof Error ? e.message : "Unknown error";
+					const status = getStatusCode(e);
+					return Response.json({ error: message }, { status });
+				}
+			},
+		},
+
+		"/api/favourites/:id": {
+			async POST(req) {
+				const id = req.params.id;
+
+				try {
+					const result = await theCatAPI.favourites.addFavourite(id);
+					return Response.json(result);
+				} catch (e) {
+					const message = e instanceof Error ? e.message : "Unknown error";
+					const status = getStatusCode(e);
+					return Response.json({ error: message }, { status });
+				}
+			},
+			async DELETE(req) {
+				const id = req.params.id;
+
+				try {
+					const result = await theCatAPI.favourites.deleteFavourite(+id);
+					console.log(`Deleted favourite with result:`, result);
+					return Response.json(result);
 				} catch (e) {
 					const message = e instanceof Error ? e.message : "Unknown error";
 					const status = getStatusCode(e);
