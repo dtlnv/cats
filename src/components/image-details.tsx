@@ -39,10 +39,10 @@ export function ImageDetails({ data }: ImageCardProps) {
 					<Button
 						onClick={() => setShowMeta(!showMeta)}
 						variant="outline"
-						aria-label={showMeta ? "Hide meta data" : "Hide meta data"}
+						aria-label={showMeta ? "Hide meta data" : "Show meta data"}
 					>
 						{showMeta ? <EyeOff /> : <Eye />}
-						{showMeta ? "Hide meta data" : "Hide meta data"}
+						{showMeta ? "Hide meta data" : "Show meta data"}
 					</Button>
 					<DownloadButton id={data.image.id} />
 					<FavoriteButton id={data.image.id} favouriteId={data.favouriteId} />

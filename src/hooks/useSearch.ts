@@ -7,7 +7,7 @@ export function useSearch(limit: number) {
 		queryKey: ["search", limit],
 		queryFn: ({ signal }) =>
 			rqFetch<CatImage[]>(`/api/images/search?limit=${limit}`, signal),
-		gcTime: 0,
+		// gcTime: 0, // TODO: Check consistency
 	});
 
 	return {
