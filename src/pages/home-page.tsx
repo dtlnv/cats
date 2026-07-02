@@ -1,22 +1,31 @@
+import { useCallback, useState } from "react";
 import { ImagesGrid } from "@/components/images-grid";
 import { Layout } from "@/components/layout";
 import { LimitSelect } from "@/components/limit-select";
 import { useSearch } from "@/hooks/useSearch";
-import { useLimitContext } from "@/providers/limit-provider";
+import { AVAILABLE_LIMITS, DEFAULT_LIMIT } from "@/lib/consts";
 
 /**
  * Main page of the app. Displays a grid of images and a limit selector.
  * Fetches images from the API based on the selected limit.
  */
 export function HomePage() {
-	const { limit } = useLimitContext();
+	const [limit, setLimit] = useState<number>(DEFAULT_LIMIT);
 	const { loading, data, error } = useSearch(limit);
+
+	const onUpdateLimit = useCallback((newLimit: number | string) => {
+		setLimit(AVAILABLE_LIMITS.includes(+newLimit) ? +newLimit : DEFAULT_LIMIT);
+	}, []);
 
 	return (
 		<Layout loading={loading}>
 			<div className="flex items-center justify-between mb-4">
 				<h1 className="text-2xl font-bold">Cats</h1>
-				<LimitSelect disabled={loading} />
+				<LimitSelect
+					limit={limit}
+					onUpdateLimit={onUpdateLimit}
+					disabled={loading}
+				/>
 			</div>
 			{!error && <ImagesGrid data={data} loading={loading} />}
 			{error ? (

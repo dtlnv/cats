@@ -12,7 +12,6 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { Toaster } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
-import { LimitProvider } from "./providers/limit-provider";
 
 export const queryClient = new QueryClient();
 
@@ -20,13 +19,11 @@ const elem = document.getElementById("root")!;
 const app = (
 	<StrictMode>
 		<BrowserRouter>
-			<LimitProvider>
-				<TooltipProvider>
-					<QueryClientProvider client={queryClient}>
-						<App />
-					</QueryClientProvider>
-				</TooltipProvider>
-			</LimitProvider>
+			<TooltipProvider>
+				<QueryClientProvider client={queryClient}>
+					<App />
+				</QueryClientProvider>
+			</TooltipProvider>
 			<Toaster position="top-center" />
 		</BrowserRouter>
 	</StrictMode>
