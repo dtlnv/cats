@@ -34,7 +34,7 @@ export function CopyButton({ url, small = false }: ImageCardProps) {
 				<Button
 					onClick={onCopy}
 					variant="outline"
-					title="Copy link to clipboard"
+					aria-label="Copy link to clipboard"
 				>
 					{changed ? <Check /> : <Link />}
 					{small ? null : changed ? "Copied!" : "Copy link"}

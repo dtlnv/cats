@@ -1,5 +1,5 @@
 import { Heart } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState, useTransition } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -8,68 +8,79 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 type ImageCardProps = {
 	id: string;
 	favouriteId: number | null;
+	setActive?: (_: boolean) => void;
 	small?: boolean;
 };
 
 export function FavoriteButton({
 	id,
 	small = false,
+	setActive,
 	favouriteId,
 }: ImageCardProps) {
 	const [favorite, setFavorite] = useState<number | null>(favouriteId);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [isPending, startTransition] = useTransition();
 
-	const onToggleFavorite = useCallback(async () => {
-		try {
-			setLoading(true);
-			const method = favorite ? "DELETE" : "POST";
-			const ID = favorite ? favorite : id; // Use favouriteId if it exists, otherwise use id
-			const response = await fetch(
-				`/api/favourites/${encodeURIComponent(ID)}`,
-				{
-					method,
-				},
-			);
+	const onToggleFavorite = () => {
+		startTransition(async () => {
+			try {
+				const method = favorite ? "DELETE" : "POST"; // POST (adding) - Image ID. DELETE - favourite ID.
+				const ID = favorite ? favorite : id; // Use favouriteId if it exists, otherwise use image id.
+				const response = await fetch(
+					`/api/favourites/${encodeURIComponent(ID)}`,
+					{
+						method,
+					},
+				);
 
-			if (!response.ok) {
-				throw new Error(
+				if (!response.ok) {
+					throw new Error(
+						favorite
+							? "Failed to remove from favourites"
+							: "Failed to add to favourites",
+					);
+				}
+
+				const result = await response.json();
+
+				toast.success(
+					favorite ? (
+						"Removed from favourites"
+					) : (
+						<>
+							Added to{" "}
+							<Link to="/favs" className="underline">
+								favourites
+							</Link>
+						</>
+					),
+				);
+				setFavorite(favorite ? null : result.id); // Toggle favorite state.
+				setActive?.(!favorite);
+			} catch (error) {
+				console.error("Error toggling favorite:", error);
+				toast.error(
 					favorite
 						? "Failed to remove from favourites"
 						: "Failed to add to favourites",
 				);
 			}
-
-			const result = await response.json();
-
-			toast.success(
-				favorite ? (
-					"Removed from favourites"
-				) : (
-					<>
-						Added to{" "}
-						<Link to="/favs" className="underline">
-							favourites
-						</Link>
-					</>
-				),
-			);
-			setFavorite(favorite ? null : result.id); // Toggle favorite state.
-		} catch (error) {
-			console.error("Error toggling favorite:", error);
-			toast.error(
-				favorite
-					? "Failed to remove from favourites"
-					: "Failed to add to favourites",
-			);
-		} finally {
-			setLoading(false);
-		}
-	}, [favorite, id]);
+		});
+	};
 
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
-				<Button onClick={onToggleFavorite} variant="outline" disabled={loading}>
+				<Button
+					onClick={onToggleFavorite}
+					variant="outline"
+					disabled={isPending}
+					aria-label={
+						favorite
+							? "Remove this image from favourites"
+							: "Add this image to favourites"
+					}
+				>
 					{favorite ? (
 						<Heart className="fill-red-500 text-red-500" />
 					) : (

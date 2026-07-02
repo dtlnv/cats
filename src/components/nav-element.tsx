@@ -6,6 +6,7 @@ type NavElementProps = {
 	label: string;
 };
 
+// TODO: Add active effect on the current page
 export function NavElement({ link, icon, label }: NavElementProps) {
 	return (
 		<Link to={link}>

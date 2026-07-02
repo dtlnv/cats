@@ -40,7 +40,11 @@ export function DownloadButton({ id, small = false }: ImageCardProps) {
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
-				<Button onClick={onDownload} variant="outline">
+				<Button
+					onClick={onDownload}
+					variant="outline"
+					aria-label="Download this image to your device"
+				>
 					<Download />
 					{small ? null : "Download"}
 				</Button>

@@ -42,7 +42,10 @@ export function EmbedButton({ url, small = false }: ImageCardProps) {
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<DialogTrigger asChild>
-						<Button variant="outline">
+						<Button
+							variant="outline"
+							aria-label="Embed this image in your website or blog"
+						>
 							<CodeXml />
 							{small ? null : "Embed"}
 						</Button>

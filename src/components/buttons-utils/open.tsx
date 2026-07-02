@@ -36,7 +36,10 @@ export function OpenButton({ id }: ImageCardProps) {
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<Link to={`/cat/${id}`}>
-					<Button variant="outline">
+					<Button
+						variant="outline"
+						aria-label={isNewTab ? "Open in new tab" : "Open image details"}
+					>
 						{isNewTab ? <ExternalLink /> : <Eye />}
 					</Button>
 				</Link>

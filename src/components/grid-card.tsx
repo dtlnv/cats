@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { CopyButton } from "./buttons-utils/copy";
@@ -23,6 +24,8 @@ export function GridCard({
 	favouriteId,
 	loading,
 }: Props) {
+	const [active, setActive] = useState<boolean>(true);
+
 	return (
 		<div className="mb-4 break-inside-avoid relative">
 			<Link
@@ -31,14 +34,6 @@ export function GridCard({
 				className="absolute inset-0 z-10 sm:hidden"
 			/>
 
-			<div className="hidden absolute top-0 left-0 w-full h-full sm:flex flex-wrap items-center justify-center gap-2 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/50 rounded-lg">
-				<OpenButton id={id} />
-				<DownloadButton id={id} small />
-				<FavoriteButton id={id} favouriteId={favouriteId} small />
-				<CopyButton url={url} small />
-				<EmbedButton url={url} small />
-			</div>
-
 			<img
 				src={url}
 				width={width}
@@ -46,10 +41,23 @@ export function GridCard({
 				alt={`Cat #${id}`}
 				className={cn(
 					"mb-4 w-full rounded-lg",
-					loading ? "grayscale-100 opacity-50" : "",
+					!active || loading ? "grayscale-100 opacity-50" : "",
 				)}
 				loading="lazy"
 			/>
+
+			<div className="hidden absolute top-0 left-0 w-full h-full sm:flex flex-wrap items-center justify-center gap-2 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/50 rounded-lg">
+				<OpenButton id={id} />
+				<DownloadButton id={id} small />
+				<FavoriteButton
+					id={id}
+					favouriteId={favouriteId}
+					setActive={setActive}
+					small
+				/>
+				<CopyButton url={url} small />
+				<EmbedButton url={url} small />
+			</div>
 		</div>
 	);
 }

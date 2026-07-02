@@ -36,9 +36,13 @@ export function ImageDetails({ data }: ImageCardProps) {
 
 			<div className="flex flex-col justify-center gap-4">
 				<div className="flex flex-wrap gap-2 items-center justify-center">
-					<Button onClick={() => setShowMeta(!showMeta)} variant="outline">
+					<Button
+						onClick={() => setShowMeta(!showMeta)}
+						variant="outline"
+						aria-label={showMeta ? "Hide meta data" : "Hide meta data"}
+					>
 						{showMeta ? <EyeOff /> : <Eye />}
-						{showMeta ? "Hide" : "Show"} meta
+						{showMeta ? "Hide meta data" : "Hide meta data"}
 					</Button>
 					<DownloadButton id={data.image.id} />
 					<FavoriteButton id={data.image.id} favouriteId={data.favouriteId} />
