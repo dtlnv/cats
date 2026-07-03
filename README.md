@@ -1,24 +1,16 @@
-# bun-react-tailwind-shadcn-template
+# Run the app
 
-To install dependencies:
-
-```bash
-bun install
-```
-
-To start a development server:
-
-```bash
-bun dev
-```
-
-To run for production:
-
-```bash
-bun start
-```
+1. Install dependencies: `bun install`.
+2. Add .env file and put your thecatapi.com api key.
+3. Start a development server: `bun dev` or `bun start` for production.
 
 This project was created using `bun init` in bun v1.3.14. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+
+## Demo
+
+![Screenshot 1](demo/1.png)
+![Screenshot 2](demo/2.png)
+![Screenshot 3](demo/3.png)
 
 ## Info
 
